@@ -171,10 +171,11 @@ class EEGClassifier:
         
         if hasattr(self.model, 'feature_importances_'):
             importance = self.model.feature_importances_
-            if self.feature_names:
+            if self.feature_names and len(self.feature_names) == len(importance):
                 return dict(zip(self.feature_names, importance))
             else:
-                return importance
+                # Return as dict with generic names
+                return {f'Feature_{i}': imp for i, imp in enumerate(importance)}
         else:
             return None
     

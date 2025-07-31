@@ -171,8 +171,15 @@ class EEGVisualizer:
         if importance_dict is None:
             return None
         
-        # Sort features by importance
-        sorted_features = sorted(importance_dict.items(), key=lambda x: x[1], reverse=True)
+        # Handle both dict and numpy array inputs
+        if isinstance(importance_dict, dict):
+            sorted_features = sorted(importance_dict.items(), key=lambda x: x[1], reverse=True)
+        elif isinstance(importance_dict, np.ndarray):
+            # Create feature names if not provided
+            feature_names = [f'Feature_{i}' for i in range(len(importance_dict))]
+            sorted_features = sorted(zip(feature_names, importance_dict), key=lambda x: x[1], reverse=True)
+        else:
+            return None
         top_features = sorted_features[:top_n]
         
         features, importances = zip(*top_features)
