@@ -1,6 +1,23 @@
 🧠 NeuroBrain – EEG-Based Intent Recognition System
 NeuroBrain is an advanced AI-powered EEG communication system designed to decode human intentions (like “Yes”, “No”, “Emergency”, etc.) using brainwave data. This project bridges neuroscience and machine learning to enable intuitive, hands-free communication — especially beneficial for individuals with physical disabilities.
 
+📥 Dataset – BCI Horizon 4
+To run this project, download publicly available EEG data from the BCI Competition IV Dataset A (Graz Dataset A):
+
+🔗 Download Dataset (BCI Competition IV - Dataset A)
+
+After downloading:
+
+Unzip the dataset.
+
+Place any .mat file (e.g., A03T.mat) into the Dataset/ directory.
+
+Update the path in app.py accordingly:
+
+python
+Copy
+Edit
+data_file = r"Dataset/A03T.mat"
 🚀 Features
 💬 Voice Feedback: Converts predicted user intents into speech using pyttsx3.
 
