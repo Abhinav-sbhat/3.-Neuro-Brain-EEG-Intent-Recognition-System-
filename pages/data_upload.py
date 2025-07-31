@@ -155,7 +155,8 @@ def render_data_upload():
                     max_value=5.0,
                     value=2.0,
                     step=0.5,
-                    help="Time window for feature extraction"
+                    help="Time window for feature extraction",
+                    key="upload_window_size"
                 )
             
             with col2:
@@ -165,7 +166,8 @@ def render_data_upload():
                     max_value=90,
                     value=50,
                     step=10,
-                    help="Overlap between consecutive windows"
+                    help="Overlap between consecutive windows",
+                    key="upload_overlap"
                 )
                 
                 intent_type = st.selectbox(

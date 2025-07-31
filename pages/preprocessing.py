@@ -37,7 +37,8 @@ def render_preprocessing():
                 min_value=1.0,
                 max_value=5.0,
                 value=3.0,
-                step=0.5
+                step=0.5,
+                key="preprocessing_artifact_threshold"
             )
         
         # Filtering
@@ -65,7 +66,8 @@ def render_preprocessing():
                 "Filter Order",
                 min_value=2,
                 max_value=10,
-                value=5
+                value=5,
+                key="preprocessing_filter_order"
             )
         
         # Normalization

@@ -31,7 +31,8 @@ def render_training():
             max_value=5.0,
             value=config.get('window_size', 2.0),
             step=0.5,
-            help="Time window for feature extraction"
+            help="Time window for feature extraction",
+            key="training_window_size"
         )
         
         overlap = st.slider(
@@ -40,7 +41,8 @@ def render_training():
             max_value=90,
             value=int(config.get('overlap', 0.5) * 100),
             step=10,
-            help="Overlap between consecutive windows"
+            help="Overlap between consecutive windows",
+            key="training_overlap"
         )
         
         # Feature types
@@ -169,7 +171,8 @@ def render_training():
                 max_value=50,
                 value=20,
                 step=5,
-                help="Percentage of data used for testing"
+                help="Percentage of data used for testing",
+                key="training_test_size"
             ) / 100
             
             # Hyperparameter optimization
