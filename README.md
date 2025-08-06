@@ -1,5 +1,7 @@
-🧠 NeuroBrain – EEG-Based Intent Recognition System
-NeuroBrain is an advanced AI-powered EEG communication system designed to decode human intentions (like “Yes”, “No”, “Emergency”, etc.) using brainwave data. This project bridges neuroscience and machine learning to enable intuitive, hands-free communication — especially beneficial for individuals with physical disabilities.
+# 🧠 NeuroBrain: A Real-Time EEG-Based Intention Recognition System for Immobile Patients Using AI
+
+## 🔍 Overview
+**NeuroBrain** is a real-time Brain-Computer Interface (BCI) system that utilizes EEG (Electroencephalography) signals to detect and classify human intentions such as motor imagery and imagined speech. The system is designed especially for **immobile or paralyzed individuals**, enabling them to communicate or control devices using only their brain activity.
 
 📥 Dataset – BCI Horizon 4
 To run this project, download publicly available EEG data from the BCI Competition IV Dataset A (Graz Dataset A):
@@ -10,33 +12,41 @@ After downloading:
 
 Unzip the dataset.
 
-Place any .mat file (e.g., A03T.mat) into the Dataset/ directory.
+## 🎯 Key Features
+- ✅ Real-time EEG signal acquisition and classification
+- 🧠 Supports motor imagery and imagined speech intent detection
+- 🧼 Preprocessing pipeline: artifact removal, bandpass filtering
+- 🧪 Feature extraction: time-domain & frequency-domain features
+- 🧠 Machine learning: SVM, Random Forest, PSO-LDA, etc.
+- 📈 Visual analytics using Plotly & Matplotlib
+- 💾 Supports `.mat`, `.csv`, `.edf` EEG file formats
+- 🧩 Modular and extensible architecture for BCI research
+- 🌐 Built using Streamlit for interactive web-based usage
 
-Update the path in app.py accordingly:
+## 🛠️ Tech Stack
+- **Frontend:** Streamlit
+- **Backend:** Python (NumPy, Pandas, SciPy, Scikit-learn)
+- **Visualization:** Plotly, Matplotlib
+- **ML Models:** Random Forest, SVM, PSO-LDA
+- **EEG Formats Supported:** `.mat`, `.csv`, `.edf`
 
-python
-Copy
-Edit
-data_file = r"Dataset/A03T.mat"
-🚀 Features
-💬 Voice Feedback: Converts predicted user intents into speech using pyttsx3.
+## 💡 Use Cases
+- Assistive communication for **paralyzed or coma patients**
+- Real-time intent detection for **smart prosthetics**
+- Hands-free control for **smart home devices**
+- Research in **BCI, neurofeedback, and cognitive computing**
 
-🧠 EEG Signal Processing: Bandpass filtering, DC offset removal, and normalization.
+## 🧪 How to Run
+```bash
+# Clone the repo
+git clone https://github.com/Abhinav-sbhat/3.-Neuro-Brain-EEG-Intent-Recognition-System.git
+cd NeuroBrain
 
-🔍 Feature Extraction: Windowed signal analysis to derive statistical features.
+# Install dependencies
+pip install -r requirements.txt
 
-🤖 Unsupervised Learning: Uses KMeans clustering for intent classification.
+# Run the app
+streamlit run app.py
 
-📊 Visualization: Bar chart and pie chart summaries of detected intent distribution.
 
-💾 Model Saving: Easily save and load trained models for future use.
-
-🧰 Tech Stack
-Languages: Python
-
-Libraries: NumPy, SciPy, scikit-learn, Pyttsx3, Matplotlib, Joblib
-
-Data Format: MATLAB .mat EEG files
-
-ML Techniques: KMeans Clustering, Signal Preprocessing, Feature Engineering
 
