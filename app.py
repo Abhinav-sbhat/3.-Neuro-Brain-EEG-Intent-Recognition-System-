@@ -1,3 +1,7 @@
+import os
+os.environ["STREAMLIT_SERVER_PORT"] = "5000"
+os.environ["STREAMLIT_SERVER_ADDRESS"] = "127.0.0.1"
+
 import streamlit as st
 import numpy as np
 import pandas as pd
@@ -6,7 +10,7 @@ import os
 
 # Configure page
 st.set_page_config(
-    page_title="🧠 NeuroBrain: EEG Intent Recognition System",
+    page_title=" NeuroBrain: EEG Intent Recognition System",
     page_icon="🧠",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -21,11 +25,11 @@ if 'features' not in st.session_state:
     st.session_state.features = None
 if 'trained_model' not in st.session_state:
     st.session_state.trained_model = None
-if 'model_type' not in st.session_state:
+if 'model_type' not in st.session_state: 
     st.session_state.model_type = 'Random Forest'
 
 def main():
-    # Custom CSS for modern dark theme
+    # Custom CSS for professional white theme
     st.markdown("""
     <style>
     /* Import Google Fonts */
@@ -33,34 +37,42 @@ def main():
     
     /* Main app styling */
     .stApp {
-        background: linear-gradient(135deg, #0f1419 0%, #1a1f2e 50%, #0f1419 100%);
+        background: #ffffff;
         font-family: 'Inter', sans-serif;
+        color: #333333;
+    }
+    
+    /* All text color */
+    .stMarkdown, .stText, .stTitle, .stHeader, .stSubheader, .stButton, 
+    .stSelectbox, .stSlider, .stTextInput, .stNumberInput, .stTextArea,
+    .stCheckbox, .stRadio, .stFileUploader, .stProgress, .stExpander,
+    .stTabs, .stDataFrame, .stTable, .stJson, .stMetric, .stAlert {
+        color: #333333 !important;
     }
     
     /* Header styling */
     .main-header {
-        background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
         padding: 2rem;
         border-radius: 15px;
-        border: 1px solid #475569;
+        border: 1px solid #dee2e6;
         margin-bottom: 2rem;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
     }
     
     .main-title {
         font-size: 2.8rem;
         font-weight: 700;
-        background: linear-gradient(135deg, #60a5fa 0%, #34d399 50%, #fbbf24 100%);
+        background: linear-gradient(135deg, #0d6efd 0%, #0dcaf0 50%, #198754 100%);
         -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
+        -webkit-text-fill-color;
         text-align: center;
         margin: 0;
-        text-shadow: 0 0 30px rgba(96, 165, 250, 0.3);
     }
     
     .main-subtitle {
         font-size: 1.2rem;
-        color: #94a3b8;
+        color: #6c757d;
         text-align: center;
         margin-top: 0.5rem;
         font-weight: 400;
@@ -68,96 +80,99 @@ def main():
     
     /* Sidebar styling */
     .css-1d391kg {
-        background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
-        border-right: 1px solid #334155;
+        background: #f8f9fa;
+        border-right: 1px solid #dee2e6;
     }
     
     /* Tab styling */
     .stTabs [data-baseweb="tab-list"] {
         gap: 8px;
-        background: rgba(30, 41, 59, 0.8);
+        background: #f8f9fa;
         border-radius: 12px;
         padding: 0.5rem;
-        border: 1px solid #334155;
+        border: 1px solid #dee2e6;
     }
     
     .stTabs [data-baseweb="tab"] {
         background: transparent;
         border-radius: 8px;
-        color: #94a3b8;
+        color: #6c757d;
         font-weight: 500;
         padding: 12px 20px;
         transition: all 0.3s ease;
     }
     
     .stTabs [aria-selected="true"] {
-        background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
-        color: white;
-        box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%);
+        color: white !important;
+        box-shadow: 0 4px 15px rgba(13, 110, 253, 0.15);
     }
     
     /* Metric cards */
     .metric-card {
-        background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+        background: #f8f9fa;
         padding: 1.5rem;
         border-radius: 12px;
-        border: 1px solid #475569;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        border: 1px solid #dee2e6;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
         margin: 0.5rem 0;
     }
     
     /* Status indicators */
-    .status-positive { color: #10b981; }
-    .status-negative { color: #ef4444; }
-    .status-warning { color: #f59e0b; }
+    .status-positive { color: #198754; }
+    .status-negative { color: #dc3545; }
+    .status-warning { color: #ffc107; }
     
     /* Buttons */
     .stButton > button {
-        background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+        background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%);
+        color: white !important;
         border: none;
         border-radius: 8px;
         padding: 0.5rem 1.5rem;
         font-weight: 500;
         transition: all 0.3s ease;
-        box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        box-shadow: 0 4px 15px rgba(13, 110, 253, 0.15);
     }
     
     .stButton > button:hover {
         transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+        box-shadow: 0 6px 20px rgba(13, 110, 253, 0.2);
     }
     
     /* Select boxes and inputs */
     .stSelectbox > div > div {
-        background: rgba(30, 41, 59, 0.8);
-        border: 1px solid #475569;
+        background: #ffffff;
+        border: 1px solid #ced4da;
         border-radius: 8px;
+        color: #333333 !important;
     }
     
     /* Progress bars */
     .stProgress .st-bo {
-        background: linear-gradient(90deg, #3b82f6 0%, #10b981 100%);
+        background: linear-gradient(90deg, #0d6efd 0%, #198754 100%);
         border-radius: 10px;
     }
     
     /* Charts and plots */
     .js-plotly-plot {
         border-radius: 12px;
-        border: 1px solid #334155;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        border: 1px solid #dee2e6;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
     }
     
     /* Expanders */
     .streamlit-expanderHeader {
-        background: rgba(30, 41, 59, 0.8);
+        background: #f8f9fa;
         border-radius: 8px;
-        border: 1px solid #475569;
+        border: 1px solid #dee2e6;
+        color: #333333 !important;
     }
     
     /* File uploader */
     .stFileUploader > div {
-        background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
-        border: 2px dashed #475569;
+        background: #f8f9fa;
+        border: 2px dashed #ced4da;
         border-radius: 12px;
         padding: 2rem;
     }
@@ -176,16 +191,16 @@ def main():
     }
     
     ::-webkit-scrollbar-track {
-        background: #0f172a;
+        background: #f1f1f1;
     }
     
     ::-webkit-scrollbar-thumb {
-        background: #475569;
+        background: #c1c1c1;
         border-radius: 4px;
     }
     
     ::-webkit-scrollbar-thumb:hover {
-        background: #64748b;
+        background: #a8a8a8;
     }
     </style>
     """, unsafe_allow_html=True)
@@ -200,15 +215,15 @@ def main():
     
     # Enhanced sidebar navigation
     st.sidebar.markdown("""
-    <div style="padding: 1rem; background: linear-gradient(135deg, #1e293b 0%, #334155 100%); border-radius: 10px; margin-bottom: 1rem;">
-        <h2 style="color: #60a5fa; margin: 0; font-size: 1.5rem;">🎛️ Navigation</h2>
+    <div style="padding: 1rem; background: #f8f9fa; border-radius: 10px; margin-bottom: 1rem; border: 1px solid #dee2e6;">
+        <h2 style="color: #0d6efd; margin: 0; font-size: 1.5rem;">🎛️ Navigation</h2>
     </div>
     """, unsafe_allow_html=True)
     
     # Enhanced system status with modern cards
     st.sidebar.markdown("""
-    <div style="padding: 1rem; background: linear-gradient(135deg, #1e293b 0%, #334155 100%); border-radius: 10px; margin-bottom: 1rem; border: 1px solid #475569;">
-        <h3 style="color: #34d399; margin: 0 0 1rem 0; font-size: 1.2rem;">📊 System Status</h3>
+    <div style="padding: 1rem; background: #f8f9fa; border-radius: 10px; margin-bottom: 1rem; border: 1px solid #dee2e6;">
+        <h3 style="color: #198754; margin: 0 0 1rem 0; font-size: 1.2rem;">📊 System Status</h3>
     </div>
     """, unsafe_allow_html=True)
     
@@ -227,9 +242,9 @@ def main():
     
     # Information panel
     st.sidebar.markdown("""
-    <div style="padding: 1rem; background: linear-gradient(135deg, #065f46 0%, #047857 100%); border-radius: 10px; margin-top: 1rem; border: 1px solid #059669;">
-        <h4 style="color: #d1fae5; margin: 0 0 0.5rem 0;">ℹ️ About NeuroBrain</h4>
-        <p style="color: #a7f3d0; font-size: 0.9rem; margin: 0;">Advanced AI system for EEG-based intention recognition. Supports motor imagery (Left/Right/Up/Down) and imagined speech (Yes/No/Start/Stop/Help) classification for immobile patients.</p>
+    <div style="padding: 1rem; background: #d1e7dd; border-radius: 10px; margin-top: 1rem; border: 1px solid #badbcc;">
+        <h4 style="color: #0f5132; margin: 0 0 0.5rem 0;">ℹ️ About NeuroBrain</h4>
+        <p style="color: #0f5132; font-size: 0.9rem; margin: 0;">Advanced AI system for EEG-based intention recognition. Supports motor imagery (Left /Right/Up/Down) and imagined speech (Yes/No/Start/Stop/Help) classification for immobile patients.</p>
     </div>
     """, unsafe_allow_html=True)
     

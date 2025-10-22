@@ -18,18 +18,18 @@ class EEGClassifier:
         
         # Intent mappings
         self.motor_imagery_intents = {
-            0: "Left Hand",
-            1: "Right Hand", 
-            2: "Feet",
-            3: "Tongue"
+            0: "Left Hand - 0",
+            1: "Right Hand - 1", 
+            2: "Feet - 2 ",
+            3: "Tongue - 3 "
         }
         
         self.speech_intents = {
-            0: "Yes",
-            1: "No",
-            2: "Start",
-            3: "Stop",
-            4: "Help"
+            0: "Yes - 0",
+            1: "No - 1",
+            2: "Start - 2",
+            3: "Stop - 3",
+            4: "Help - 4"
         }
         
         self._initialize_model()

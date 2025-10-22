@@ -179,8 +179,8 @@ def render_raw_signal_analysis(visualizer):
             for i in range(n_channels_plot):
                 fig.update_yaxes(title_text="Amplitude (µV)", row=i+1, col=1)
             
-            st.plotly_chart(fig, use_container_width=True)
-            
+            st.plotly_chart(fig, use_container_width=True, key="raw_signal_plot")
+
             # Signal statistics
             if show_statistics:
                 st.markdown("### Signal Statistics")
@@ -244,7 +244,8 @@ def render_frequency_analysis(visualizer, processor):
             freqs, psd = processor.compute_psd(data, nperseg=nperseg)
             
             psd_fig = visualizer.plot_power_spectrum(data, freqs, psd, max_freq=max_freq)
-            st.plotly_chart(psd_fig, use_container_width=True)
+            st.plotly_chart(psd_fig, use_container_width=True, key="psd_plot")
+
         
         if analysis_type in ["Frequency Bands", "Both"]:
             # Compute and plot frequency bands
@@ -252,7 +253,8 @@ def render_frequency_analysis(visualizer, processor):
             
             if band_powers:
                 bands_fig = visualizer.plot_frequency_bands(band_powers)
-                st.plotly_chart(bands_fig, use_container_width=True)
+                st.plotly_chart(bands_fig, use_container_width=True, key="bands_plot")
+
                 
                 # Band power details
                 st.markdown("### Frequency Band Powers")
@@ -320,7 +322,8 @@ def render_time_frequency_analysis(visualizer, processor):
         
         # Plot spectrogram
         spec_fig = visualizer.plot_spectrogram(freqs, times, Sxx, max_freq=max_freq_spec)
-        st.plotly_chart(spec_fig, use_container_width=True)
+        st.plotly_chart(spec_fig, use_container_width=True, key="spectrogram_plot")
+
         
         # Time-frequency statistics
         st.markdown(f"### Spectrogram Statistics ({channel_for_spec if n_channels > 1 else 'EEG Signal'})")
@@ -413,7 +416,8 @@ def render_feature_analysis(visualizer):
                     height=500
                 )
                 
-                st.plotly_chart(fig, use_container_width=True)
+                st.plotly_chart(fig, use_container_width=True, key="feature_distribution_plot")
+
                 
                 # Feature statistics table
                 st.markdown("### Feature Statistics")
@@ -459,7 +463,8 @@ def render_feature_analysis(visualizer):
                     height=500
                 )
                 
-                st.plotly_chart(fig, use_container_width=True)
+                st.plotly_chart(fig, use_container_width=True, key="correlation_heatmap_plot")
+
             
             elif analysis_type == "Feature Importance":
                 # Feature importance from trained model
@@ -472,7 +477,8 @@ def render_feature_analysis(visualizer):
                         
                         if filtered_importance:
                             importance_fig = visualizer.plot_feature_importance(filtered_importance, top_n=len(filtered_importance))
-                            st.plotly_chart(importance_fig, use_container_width=True)
+                            st.plotly_chart(importance_fig, use_container_width=True, key="feature_importance_plot")
+
                         else:
                             st.warning("No importance data available for selected features.")
                     else:
@@ -527,7 +533,12 @@ def render_model_performance(visualizer):
         labels_subset = labels[:cm.shape[0]]  # Match matrix size
         
         cm_fig = visualizer.plot_confusion_matrix(cm, labels_subset)
-        st.plotly_chart(cm_fig, use_container_width=True)
+        import time
+        import uuid
+        st.plotly_chart(cm_fig, use_container_width=True, key=str(uuid.uuid4()))
+
+
+
     
     # Feature importance
     if results['feature_importance'] is not None:
@@ -535,7 +546,8 @@ def render_model_performance(visualizer):
         
         importance_fig = visualizer.plot_feature_importance(results['feature_importance'])
         if importance_fig:
-            st.plotly_chart(importance_fig, use_container_width=True)
+            st.plotly_chart(importance_fig, use_container_width=True, key="model_feature_importance_plot")
+
     
     # Real-time prediction performance
     if st.session_state.real_time_predictions:
@@ -545,7 +557,8 @@ def render_model_performance(visualizer):
         
         # Confidence timeline
         confidence_fig = visualizer.plot_prediction_confidence(predictions)
-        st.plotly_chart(confidence_fig, use_container_width=True)
+        st.plotly_chart(confidence_fig, use_container_width=True, key="realtime_confidence_plot")
+
         
         # Performance statistics
         reliable_count = sum(1 for p in predictions if p['reliable'])
@@ -638,8 +651,8 @@ def render_topography_analysis(visualizer):
         
         # Create topography plot
         topo_fig = visualizer.plot_eeg_topography(values)
-        st.plotly_chart(topo_fig, use_container_width=True)
-        
+        st.plotly_chart(topo_fig, use_container_width=True, key="topography_plot")
+
         # Channel values table
         st.markdown("### Channel Values")
         
