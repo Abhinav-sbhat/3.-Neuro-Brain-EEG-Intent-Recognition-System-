@@ -14,7 +14,6 @@ Medical-grade performance metrics with low latency for responsive analysis.
 
 This project demonstrates the integration of machine learning, neuroscience, and UI/UX design in one unified platform.
 
-README.md for GitHub
 # NeuroBrain: EEG Intent Recognition System 🧠
 
 NeuroBrain AI is a state-of-the-art **EEG-based intention recognition system**. It leverages machine learning and real-time EEG analysis to identify neural patterns and user intentions for medical, research, and assistive applications.
@@ -56,17 +55,19 @@ Neuro-Brain/
 └─ attached_assets/ # Additional files, images, etc.
 
 
+Dataset Link - https://bnci-horizon-2020.eu/database/data-sets
+
 ## 🚀 Getting Started
 
 1. **Clone the repository:**
 ```bash
 git clone https://github.com/Abhinav-sbhat/3.-Neuro-Brain-EEG-Intent-Recognition-System-.git
 cd "Neuro Brain"
-2. streamlit run app1.py
+2. streamlit run app1.py --server.port 5000 --server.address 127.0.0.1
 ```
-2. Open the app in your browser at http://127.0.0.1:5000
+3. Open the app in your browser at http://127.0.0.1:5000
 
-3. ⚡ Usage
+4. ⚡ Usage
 
 Upload your EEG data in .mat or supported formats.
 
