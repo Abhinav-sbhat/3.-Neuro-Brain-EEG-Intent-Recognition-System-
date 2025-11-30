@@ -515,29 +515,24 @@ def main():
         visualization_page()
 
 def data_upload_page():
-    """Data upload and validation page"""
-    from pages.data_upload import render_data_upload
-    render_data_upload()
+    st.header("🧬 Data Upload Page")
+    st.info("This page is under construction. File upload UI will be added here.")
 
 def preprocessing_page():
-    """Signal preprocessing page"""
-    from pages.preprocessing import render_preprocessing
-    render_preprocessing()
+    st.header("🔬 Signal Processing Page")
+    st.info("Processing functions will be added here.")
 
 def training_page():
-    """Model training page"""
-    from pages.training import render_training
-    render_training()
+    st.header("🤖 Model Training Page")
+    st.info("ML training will be shown here.")
 
 def real_time_page():
-    """Real-time prediction page"""
-    from pages.real_time import render_real_time
-    render_real_time()
+    st.header("⚡ Real-Time Prediction Page")
+    st.info("Live EEG recognition will come here.")
 
 def visualization_page():
-    """Advanced visualization page"""
-    from pages.visualization import render_visualization
-    render_visualization()
+    st.header("📊 Visualization Dashboard")
+    st.info("Waveforms and charts will appear here.")
 
 if __name__ == "__main__":
     main()
