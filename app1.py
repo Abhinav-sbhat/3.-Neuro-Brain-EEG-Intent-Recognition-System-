@@ -1,6 +1,4 @@
-import os
-os.environ["STREAMLIT_SERVER_PORT"] = "5000"
-os.environ["STREAMLIT_SERVER_ADDRESS"] = "127.0.0.1"
+
 
 import streamlit as st
 import numpy as np
