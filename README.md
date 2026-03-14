@@ -1,4 +1,3 @@
----
 
 # NeuroBrain – EEG-Based Intention Recognition System Using Artificial Intelligence
 
