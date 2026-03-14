@@ -7,3 +7,4 @@ joblib==1.5.2
 plotly==6.4.0
 matplotlib==3.10.7
 mne==1.10.2
+seaborn
